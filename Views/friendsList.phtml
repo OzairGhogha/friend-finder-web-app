@@ -1,0 +1,63 @@
+<?php require('template/header.phtml');
+require_once('Models/UsersDataSet.php');
+require_once('friendsList.php')?>
+
+
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <br>
+
+
+    <?php if(isset($_SESSION['id'])) :?>
+    <form method="post" action="/friendsList.php">
+        <h3>Search by First Name</h3>
+        <input type="text" name="search" required/>
+        <input type="submit" value="Search"/>
+    </form>
+    <table class="table table-hover">
+        <thead>
+        <tr><th>User ID</th><th>Username</th><th>First Name</th><th>Last Name</th><th>Image</th><th>Longitude</th><th>Latitude</th></tr>
+
+
+        </thead>
+        <tbody>
+       <?php
+       //output database fields in table using accessors
+            foreach ($view->usersDataSet as $userData) {
+            echo '<tr> <td>' . $userData->getUserID() .
+                '</td> <td>' . $userData->getUsername() .
+                '</td> <td>' . $userData->getFirstName() .
+                '</td> <td>' . $userData->getLastName() .
+                '</td> <td>' . '<img src="images/' . $userData->getPhotoName() . '"alt="No-Image"/>' .
+                '</td> <td>' . $userData->getLongitude() .
+                '</td> <td>' . $userData->getLatitude() .
+
+                '</td> </td></tr>';
+        }
+            else: ?>
+                <table class="table table-hover">
+        <thead>
+        <tr><th>Username</th><th>First Name</th><th>Last Name</th><th>Image</th></tr>
+
+
+        </thead>
+        <tbody>
+        <?php
+            foreach ($view->usersDataSet as $userData) {
+                echo
+                    '</td> <td>' . $userData->getUsername() .
+                    '</td> <td>' . $userData->getFirstName() .
+                    '</td> <td>' . $userData->getLastName() .
+                    '</td> <td>' . '<img src="images/' . $userData->getPhotoName() . '"alt="No-Image"/>' .
+
+                    '</td> </td></tr>';
+            }
+        endif;
+            ?>
+        </tbody>
+    </table>
+</form>
+
+
+
+<?php require('template/footer.phtml') ?>
+

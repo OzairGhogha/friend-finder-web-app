@@ -1,0 +1,284 @@
+<?php require('template/header.phtml');
+require_once('Models/UsersDataSet.php');
+require_once('Models/FriendshipDataSet.php');
+require_once('yourFriends.php');
+//$get_frnd_num = (new FriendshipDataSet)->get_all_friends($_SESSION['user_id'], false);
+//// GET MY($_SESSION['user_id']) ALL FRIENDS
+//$get_all_friends = (new FriendshipDataSet)->get_all_friends($_SESSION['user_id'], true);
+
+?>
+
+<meta name="viewport" content="user-scalable=no, width=device-width" />
+<form method="post" action="/friendsList.php">
+    <h3>Search by First Name</h3>
+    <input type="text" name="search" required/>
+    <input type="submit" value="Search"/>
+</form>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <br>
+
+<!--create table-->
+<table class="table table-hover col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>Friendship ID</th>
+        <th>Username</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Longitude</th>
+        <th>Latitude</th>
+        <th>Friendship Status</th>
+
+    </tr>
+    </thead>
+    <tbody>
+<!--        --><?php
+//if($get_frnd_num > 0){
+//    foreach($get_all_friends as $row){
+//        echo '<div class="user_box">
+//                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile image"></div>
+//                                <div class="user_info"><span>'.$row->username.'</span>
+//                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See profile</a></div>
+//                            </div>';
+//    }
+//}
+//else{
+//    echo '<h4>You have no friends!</h4>';
+//}
+//display database fields as table
+//connect to database
+    $conn = mysqli_connect('poseidon.salford.ac.uk','agd646','MJbXVeuFXy4Gl8v','agd646_cssy2');
+    //$sql = ("SELECT * FROM friendship FULL JOIN usertable ON FULL.fromUser = usertable.id OR FULL.toUser = usertable.id WHERE usertable.id =' ".($_SESSION['id']."'"));
+//query to show all
+    $sql = ("SELECT * FROM usertable LIMIT 10");
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr><td>" . "<img src=images/" . $row['photoname'] . ' width=100px height="100px">' .
+                    "</td><td>" . $row["username"] .
+                    "</td><td>" . $row["username"] .
+                    "</td><td>" . $row["firstname"] .
+                    "</td><td>" . $row["lastname"] .
+                    "</td><td>" . $row["longitude"] .
+                    "</td><td>" . $row["latitude"] .
+                    "</td>"; }
+            }
+//    $script = "var locations = [";
+//        foreach ($view->usersDataSet as $UsersData) {
+//            $script = $script . "['" . $UsersData->getUsername() . "'," . $UsersData->getLongitude() . "," . $UsersData->getLatitude() . "],";
+//                    }
+//        $script = rtrim($script, ",");
+//        $script  = $script . "];";
+//        echo $script;
+//        var_dump($script);
+
+
+
+
+
+
+//            foreach ($view->friendshipDataSet as $friendshipData) {
+//                echo '<tr> <td>' . $friendshipData->getFriendshipID() .
+//                    '</td> <td>' . $friendshipData->getUsername() .
+//                    '</td> <td>' . $friendshipData->getFirstName() .
+//                    '</td> <td>' . $friendshipData->getLastName() .
+//                    '</td> <td>' . '<img src="images/' . $friendshipData->getPhotoName() . '"alt="No-Image"/>' .
+//                    '</td> <td>' . $friendshipData->getLongitude() .
+//                    '</td> <td>' . $friendshipData->getLatitude() .
+//
+//                    '</td> </td></tr>';
+//            }
+        ?>
+
+        </tbody>
+    </table>
+</form>
+
+<!--<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>-->
+<!--<div id="popup" class="ol-popup">-->
+<!--    <a href="#" id="popup-closer" class="ol-popup-closer"></a>-->
+<!--    <div id="popup-content"></div>-->
+<!--</div>-->
+<!---->
+<!--<body>-->
+<!--<h2>My Map</h2>-->
+<!--<div id="map" class="map"></div>-->
+<!--<script type="text/javascript">-->
+<!--    var locations = [-->
+<!--        ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],-->
+<!--        ['Bondi Beach', -33.890542, 151.274856, 4],-->
+<!--        ['Coogee Beach', -33.923036, 151.259052, 5],-->
+<!--        ['Maroubra Beach', -33.950198, 151.259302, 1],-->
+<!--        ['Cronulla Beach', -34.028249, 151.157507, 3]-->
+<!--    ];-->
+<!--    var map = new ol.Map({-->
+<!--        target: 'map',-->
+<!--        layers: [-->
+<!--            new ol.layer.Tile({-->
+<!--                source: new ol.source.OSM()-->
+<!--            })-->
+<!--        ],-->
+<!--        view: new ol.View({-->
+<!--            center: ol.proj.fromLonLat([1.00, 55.20]),-->
+<!--            zoom: 4-->
+<!--        })-->
+<!--    });-->
+<!--    var layer = new ol.layer.Vector({-->
+<!--        source: new ol.source.Vector({-->
+<!--            features: [-->
+<!--                new ol.Feature({-->
+<!--                    geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))-->
+<!--                })-->
+<!--            ]-->
+<!--        })-->
+<!--    });-->
+<!--    map.addLayer(layer);-->
+<!--    var container = document.getElementById('popup');-->
+<!--    var content = document.getElementById('popup-content');-->
+<!--    var closer = document.getElementById('popup-closer');-->
+<!---->
+<!---->
+<!---->
+<!--    var overlay = new ol.Overlay({-->
+<!--        element: container,-->
+<!--        autoPan: true,-->
+<!--        autoPanAnimation: {-->
+<!--            duration: 250-->
+<!--        }-->
+<!--    });-->
+<!--    map.addOverlay(overlay);-->
+<!---->
+<!--    closer.onclick = function() {-->
+<!--        overlay.setPosition(undefined);-->
+<!--        closer.blur();-->
+<!--        return false;-->
+<!--    };-->
+<!--    map.on('singleclick', function (event) {-->
+<!--        if (map.hasFeatureAtPixel(event.pixel) === true) {-->
+<!--            var coordinate = event.coordinate;-->
+<!---->
+<!--            content.innerHTML = '<b>This is a Pop-Up!</b><br />I am a popup.';-->
+<!--            overlay.setPosition(coordinate);-->
+<!--        } else {-->
+<!--            overlay.setPosition(undefined);-->
+<!--            closer.blur();-->
+<!--        }-->
+<!--    });-->
+<!---->
+<!---->
+<!--</script>-->
+
+<body>
+<div id="Map" style="width:1200px;height:800px"></div>
+
+<script src="/OpenLayers-2.13.1/OpenLayers.js"></script>
+
+<script>
+
+    //var array = [
+    //    <?php
+    //    $query = ("SELECT username, longitude, latitude FROM usertable");
+    //    $result2 = mysqli_query($conn, $query);
+    //    while ($rows = mysqli_fetch_assoc($result2)) {
+    //        $username = $rows["username"];
+    //        $longitude = $rows["longitude"];
+    //        $latitude = $rows["latitude"];
+    //        echo "'$username',","'$longitude',","'$latitude'" ;
+    //    }
+    //    ?>
+    //];
+
+    <?php
+        //get database values
+    $query = ("SELECT * FROM usertable");
+    $result2 = mysqli_query($conn, $query);
+    while ($rows = mysqli_fetch_assoc($result2)) {
+        $username = $rows["username"];
+        $longitude = $rows["longitude"];
+        $latitude = $rows["latitude"];
+        $array = array($username, $longitude, $latitude);
+        // encode array
+        $json = json_encode($array);
+    }
+    ?>
+// output values as js array
+    var array = <?php echo $json; ?>;
+    document.write(array);
+
+    var locations = [
+        ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],['Bondi Beach', -33.890542, 151.274856, 4],['Coogee Beach', -33.923036, 151.259052, 5],['Maroubra Beach', -33.950198, 151.259302, 1],['Cronulla Beach', -34.028249, 151.157507, 3]
+    ];
+//default location
+    var lat            = -33.89;
+    var lon            = 151.274856;
+    var zoom           = 11;
+
+    var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+    var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+    var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+
+    map = new OpenLayers.Map("Map");
+    var mapnik         = new OpenLayers.Layer.OSM();
+    map.addLayer(mapnik);
+
+    // http://dev.openlayers.org/docs/files/OpenLayers/Marker-js.html
+
+    // make a marker layer
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+
+    locations.forEach(createMarker)
+//create the marker
+    function createMarker(item,index)
+    {
+        // show the data in the console
+        console.log(item[0],item[2], item[1]);
+        // create a marker from the data
+        let mposition = new OpenLayers.LonLat(item[2], item[1]).transform( fromProjection, toProjection);
+        // place marker on the map layer
+        markers.addMarker(new OpenLayers.Marker(mposition));
+    }
+
+    map.setCenter(position, zoom);
+
+    // create an overlay
+    var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+
+    // Define markers as "features" of the vector layer:
+    var feature = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.Point(-0.1279688,51.5077286)
+            .transform(epsg4326, projectTo),
+
+        { description: 'This is the value of<br>the description attribute.' + '<img src="/images/aafonsoof.jpeg">' },
+
+        { externalGraphic: 'marker-gold.png', graphicHeight: 30, graphicWidth: 30, graphicXOffset: -12, graphicYOffset: -25 }
+    );
+
+    vectorLayer.addFeatures(feature); // add the feature
+    //Add a selector control to the vectorLayer with popup functions
+    var controls = {
+        selector: new OpenLayers.Control.SelectFeature(vectorLayer, { onSelect: createPopup, onUnselect: destroyPopup })
+    };
+
+    function createPopup(feature) {
+        feature.popup = new OpenLayers.Popup.FramedCloud("pop",
+            feature.geometry.getBounds().getCenterLonLat(),
+            null,'<div class="markerContent">' + feature.attributes.description + '</div>',null,true,
+            function () { controls['selector'].unselectAll(); });
+        map.addPopup(feature.popup);
+    }
+
+    function destroyPopup(feature) {
+        feature.popup.destroy();
+        feature.popup = null;
+    }
+
+    map.addControl(controls['selector']);
+    controls['selector'].activate();
+
+</script>
+</body>
+
+<?php require('template/footer.phtml') ?>
+

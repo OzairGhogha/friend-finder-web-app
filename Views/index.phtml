@@ -1,0 +1,54 @@
+<?php
+require('template/header.phtml');
+//require_once('liveSearch.php')
+?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<h3>Welcome to the web-site </h3>
+
+
+
+<h3 id="index-text">Welcome, <?php if(isset($_SESSION['id'])){
+    //display session username
+        echo explode(" ", $_SESSION['username'])[0];
+    }else{
+        echo 'Guest User - Log-In to access full functionality!';
+    }
+    ?> </h3>
+
+<?php //if(isset($_SESSION['id'])) : ?>
+
+
+<!--<body>-->
+<!--    <div class="temp">-->
+<!--        <h1>SEARCH</h1>-->
+<!--        <input type="text" onkeyup="imu(this.value)" placeholder="Live Search">-->
+<!--        <div id="content">-->
+<!--            Results:-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+
+<script src="/js/searchScript.js"></script>
+
+<div class="container-fluid">
+    <div class="content-wrapper">
+        <div class="container">
+            <h1>Live User Search</h1>
+            <div class="row">
+                <div class="col-xs-12">
+                    <input type="text" name="search" id="search" placeholder="Search by ID, Username, Firstname and Lastname" class="form-control" />
+                    <div id="result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<?php
+require('template/footer.phtml') ?>
